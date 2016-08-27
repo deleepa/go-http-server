@@ -20,14 +20,18 @@ type UserInfo struct {
 
 //handler for the index file
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	//path for index view
+	indexView := "views/index.html";
 	//index.html is parsed as a template file
-	t, _ := template.ParseFiles("index.html");
+	t, _ := template.ParseFiles(indexView);
 	//nil because there is no data to pass to template file
 	t.Execute(w, nil);
 }
 
 //handler for the /data endpoint
 func dataHandler(w http.ResponseWriter, r *http.Request) {
+	//path for success view
+	successView := "views/success.html";
 	//if the request method is not POST, reject it
 	if(r.Method != "POST") {
 		http.NotFound(w, r);
@@ -45,7 +49,7 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 	u := &UserInfo{Name: r.Form.Get("name"), Age: r.Form.Get("age")};
 
 	//respond with success.html which accepts a UserInfo struct
-	t, _ := template.ParseFiles("success.html");
+	t, _ := template.ParseFiles(successView);
 	t.Execute(w, u);
 }
 
